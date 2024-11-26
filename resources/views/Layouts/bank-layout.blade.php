@@ -19,20 +19,28 @@
         body {
             display: flex;
             height: 100vh;
-            background-color: #f8f9fa;
+            background-color: #f4f6f9;
         }
 
         .sidebar {
+            margin-top: 40px;
             width: 250px;
-            background-color: #005faf;
-            color: #fff;
+            background-color: #2c3e50;
+            color: #ecf0f1;
             display: flex;
             flex-direction: column;
             padding-top: 20px;
+            position: fixed;
+            height: 100%;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .sidebar.hidden {
+            transform: translateX(-100%);
         }
 
         .sidebar .nav-link {
-            color: #fff;
+            color: #ecf0f1;
             padding: 15px 20px;
             text-decoration: none;
             display: flex;
@@ -40,9 +48,14 @@
             transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .sidebar .nav-link.active,
+        .sidebar .nav-link.active {
+            background-color: #1abc9c;
+            color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
         .sidebar .nav-link:hover {
-            background-color: #495057;
+            background-color: #137360;
             color: #fff;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
@@ -51,44 +64,42 @@
             margin-right: 10px;
         }
 
-        .sidebar .nav-link.active {
-            background-color: #003d7d;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        .logo {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .logo img {
-            max-width: 80%;
-        }
-
         .content {
             flex-grow: 1;
+            margin-left: 250px;
             margin-top: 60px;
-            margin-left: 30px;
+            transition: margin-left 0.3s ease-in-out;
+        }
+
+        .content.full {
+            margin-left: 0;
         }
 
         .header {
             padding: 10px 20px;
-            background-color: #e9ecef;
+            background-color: #ecf0f1;
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            width: calc(100% - 250px);
+            width: 100%;
             position: fixed;
             top: 0;
-            left: 250px;
+            left: 0;
             z-index: 1000;
         }
 
         .header-title {
+            display: flex;
+            align-items: center;
             font-size: 20px;
             font-weight: bold;
+        }
+
+        .header-title img {
+            max-height: 40px;
+            margin-right: 10px;
         }
 
         .user-dropdown {
@@ -123,26 +134,45 @@
         .user-dropdown-menu a:hover {
             background-color: #f5f5f5;
         }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .content {
+                margin-left: 0;
+            }
+        }
     </style>
 </head>
 
 <body>
     <!-- Sidebar -->
-    <div class="sidebar">
-        <div class="logo">
-            <img src="images\bca-logo-white.png" alt="Bank Logo">
-        </div>
+    <div class="sidebar" id="sidebar">
         <nav class="nav flex-column">
-            <a href="/bank/home" class="nav-link active" id="homeLink"><i class="bi bi-house-door-fill"></i> Home</a>
-            <a href="/bank/payment" class="nav-link" id="paymentLink"><i class="bi bi-credit-card-fill"></i> Payment</a>
+            <a href="/bank/home"
+                class="nav-link {{ Request::is('bank/home') ? 'active' : '' }}"
+                id="homeLink">
+                <i class="bi bi-house-door-fill"></i> Home
+            </a>
+            <a href="/bank/payment"
+                class="nav-link {{ Request::is('bank/payment') ? 'active' : '' }}"
+                id="paymentLink">
+                <i class="bi bi-credit-card-fill"></i> Payment
+            </a>
         </nav>
     </div>
 
     <!-- Main Content -->
-    <div class="content">
+    <div class="content" id="content">
         <!-- Header -->
         <div class="header">
-            <div class="header-title">Bank BCA</div>
+            <button class="btn btn-light d-md-none" id="toggleSidebar"><i class="bi bi-list"></i></button>
+            <div class="header-title">
+                <img src="{{ asset('images/bca-logo-white.png') }}" alt="Bank Logo">
+                Bank BCA
+            </div>
             <div class="user-dropdown">
                 <button class="btn btn-light dropdown-toggle" id="dropdownUserButton">
                     <i class="bi bi-person-circle"></i> User
@@ -163,22 +193,15 @@
     <!-- JavaScript -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const homeLink = document.getElementById('homeLink');
-            const paymentLink = document.getElementById('paymentLink');
+            const sidebar = document.getElementById('sidebar');
+            const content = document.getElementById('content');
+            const toggleSidebar = document.getElementById('toggleSidebar');
 
-            // Add click event listener to the "Home" link
-            homeLink.addEventListener('click', () => {
-                homeLink.classList.add('active');
-                paymentLink.classList.remove('active');
+            toggleSidebar.addEventListener('click', () => {
+                sidebar.classList.toggle('hidden');
+                content.classList.toggle('full');
             });
 
-            // Add click event listener to the "Payment" link
-            paymentLink.addEventListener('click', () => {
-                paymentLink.classList.add('active');
-                homeLink.classList.remove('active');
-            });
-
-            // Dropdown functionality
             const dropdownButton = document.getElementById('dropdownUserButton');
             const dropdownMenu = document.getElementById('userDropdownMenu');
             dropdownButton.addEventListener('click', () => {

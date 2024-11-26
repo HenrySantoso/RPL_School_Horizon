@@ -9,8 +9,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
     <!-- Bootstrap Icon -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <!-- CSS for Datatables -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.css">
 
     <style>
         /* Basic Reset */
@@ -27,12 +25,21 @@
         }
 
         .sidebar {
+            margin-top: 40px;
             width: 250px;
             background-color: #2c3e50;
             color: #ecf0f1;
             display: flex;
             flex-direction: column;
             padding-top: 20px;
+            position: fixed;
+            height: 100%;
+            transition: transform 0.3s ease-in-out;
+            transform: translateX(0);
+        }
+
+        .sidebar.hidden {
+            transform: translateX(-100%);
         }
 
         .sidebar .nav-link {
@@ -44,9 +51,14 @@
             transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .sidebar .nav-link.active,
-        .sidebar .nav-link:hover {
+        .sidebar .nav-link.active{
             background-color: #1abc9c;
+            color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .sidebar .nav-link:hover {
+            background-color: #137360;
             color: #fff;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
@@ -55,22 +67,15 @@
             margin-right: 10px;
         }
 
-        .sidebar .nav-link.active {
-            background-color: #3498db;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        .logo {
-            text-align: center;
-        }
-
-        .logo img {
-            max-width: 10%;
-        }
-
         .content {
             flex-grow: 1;
+            margin-left: 250px;
             margin-top: 60px;
+            transition: margin-left 0.3s ease-in-out;
+        }
+
+        .content.full {
+            margin-left: 0;
         }
 
         .header {
@@ -81,16 +86,23 @@
             align-items: center;
             margin-bottom: 20px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            width: calc(100% - 250px);
+            width: 100%;
             position: fixed;
             top: 0;
-            left: 250px;
+            left: 0;
             z-index: 1000;
         }
 
         .header-title {
+            display: flex;
+            align-items: center;
             font-size: 20px;
             font-weight: bold;
+        }
+
+        .header-title img {
+            max-height: 40px;
+            margin-right: 10px;
         }
 
         .user-dropdown {
@@ -125,27 +137,45 @@
         .user-dropdown-menu a:hover {
             background-color: #f5f5f5;
         }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .content {
+                margin-left: 0;
+            }
+        }
     </style>
 </head>
 
 <body>
     <!-- Sidebar -->
-    <div class="sidebar">
-        <div class="logo">
-            <img src="{{ asset('images/horizon-logo.png') }}" alt="Horizon University Logo">
-        </div>
+    <div class="sidebar" id="sidebar">
         <nav class="nav flex-column">
-            <a href="/student/dashboard" class="nav-link active" id="dashboardLink"><i class="bi bi-people"></i>
-                Dashboard</a>
-            <a href="/student/invoice" class="nav-link" id="invoiceLink"><i class="bi bi-receipt"></i> Invoice</a>
+            <a href="/student/dashboard"
+               class="nav-link {{ Request::is('student/dashboard') ? 'active' : '' }}"
+               id="dashboardLink">
+                <i class="bi bi-people"></i> Dashboard
+            </a>
+            <a href="/student/invoice"
+               class="nav-link {{ Request::is('student/invoice') ? 'active' : '' }}"
+               id="invoiceLink">
+                <i class="bi bi-receipt"></i> Invoice
+            </a>
         </nav>
     </div>
 
     <!-- Main Content -->
-    <div class="content">
+    <div class="content" id="content">
         <!-- Header -->
         <div class="header">
-            <div class="header-title">Horizon University</div>
+            <button class="btn btn-light d-md-none" id="toggleSidebar"><i class="bi bi-list"></i></button>
+            <div class="header-title">
+                <img src="{{ asset('images/horizon-logo.png') }}" alt="Horizon University Logo">
+                Horizon University
+            </div>
             <div class="user-dropdown">
                 <button class="btn btn-light dropdown-toggle" id="dropdownUserButton">
                     <i class="bi bi-person-circle"></i> {{ Auth::user()->name ?? 'Guest' }}
@@ -166,18 +196,13 @@
     <!-- JavaScript -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const dashboardLink = document.getElementById('dashboardLink');
-            const invoiceLink = document.getElementById('invoiceLink');
+            const sidebar = document.getElementById('sidebar');
+            const content = document.getElementById('content');
+            const toggleSidebar = document.getElementById('toggleSidebar');
 
-            // Sidebar active state
-            dashboardLink.addEventListener('click', () => {
-                dashboardLink.classList.add('active');
-                invoiceLink.classList.remove('active');
-            });
-
-            invoiceLink.addEventListener('click', () => {
-                invoiceLink.classList.add('active');
-                dashboardLink.classList.remove('active');
+            toggleSidebar.addEventListener('click', () => {
+                sidebar.classList.toggle('hidden');
+                content.classList.toggle('full');
             });
 
             // Dropdown functionality
@@ -192,20 +217,6 @@
                 }
             });
         });
-    </script>
-
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
-    <script>
-        new DataTable('#example');
     </script>
 </body>
 
