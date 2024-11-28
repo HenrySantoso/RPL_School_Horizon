@@ -1,43 +1,43 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ApiController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\ApiController;
 use App\Http\Controllers\BankController;
 use App\Http\Controllers\StudentController;
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+use App\Http\Controllers\InvoiceController;
 
-//login bank app
-Route::get('/loginBank', [LoginController::class, 'showLoginFormBank'])->name('login');
-Route::post('/login', [LoginController::class, 'login']);
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+//guest login
+Route::middleware(['guest:student'])->group(function () {
+    Route::get('/loginStudent', [AuthController::class, 'showLogin'])->name('loginStudent');
+    Route::post('/loginStudent', [AuthController::class, 'loginStudent']);
+});
 
 //login student app
-Route::get('/loginStudent', [LoginController::class, 'showLoginFormStudent'])->name('login');
-
-// Redirect users after login
-Route::get('/dashboard', function () {
-    return "Welcome to your banking dashboard!";
-})->middleware('auth');
-
-//banking app
-Route::get('/bank/home', [BankController::class, 'home']);
-Route::get('/bank/payment', [BankController::class, 'payment']);
-Route::post('/bank/payment/process', [BankController::class, 'process'])->name('payment.process');
+Route::get('/loginStudent', [LoginController::class, 'showLoginStudentForm'])->name('loginStudent');
+Route::post('/loginStudent', [LoginController::class, 'loginStudent']);
+Route::post('/logoutStudent', [LoginController::class, 'logoutStudent'])->name('logoutStudent');
 
 //student app
-Route::get('/student/dashboard', [StudentController::class, 'dashboard']);
-Route::get('/student/invoice', [StudentController::class, 'invoice']);
+Route::middleware(['auth', 'role:student'])->group(function () {
+    Route::get('/student/dashboard', [StudentController::class, 'dashboard']);
+    Route::get('/student/invoice', [StudentController::class, 'invoice']);
+    Route::get('/student/transaction', [StudentController::class, 'transaction']);
+});
+
+//login bank app
+Route::get('/loginBank', [LoginController::class, 'showLoginFormBank'])->name('loginBank');
+Route::post('/loginBank', [LoginController::class, 'login']);
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+//banking app
+Route::get('/bank/account', [BankController::class, 'account']);
+Route::get('/bank/payment', [BankController::class, 'payment']);
+Route::post('/bank/payment/process', [BankController::class, 'process'])->name('payment.process');
 
 //api
 Route::get('/', [ApiController::class, 'getApiData']);
 Route::get('/test', [ApiController::class, 'getCategory']);
+
+//invoice
+Route::get('/generate-invoice', [InvoiceController::class, 'generateInvoice'])->name('generate-invoice');;

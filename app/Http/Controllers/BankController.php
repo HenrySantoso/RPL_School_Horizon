@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 
 class BankController extends Controller
 {
-    public function home()
+    public function account()
     {
-        return view('pages.bank-Home'); // Returns the login view
+        return view('pages.bank-Account'); // Returns the login view
     }
 
     public function payment()

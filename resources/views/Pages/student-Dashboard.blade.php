@@ -15,11 +15,15 @@
                 <tbody>
                     <tr>
                         <th class="w-25">Student ID</th>
-                        <td>72220543</td>
+                        <td>{{ Auth::user()->username }}</td>
                     </tr>
                     <tr>
                         <th>Name</th>
                         <td>Henry Yohanes Santoso</td>
+                    </tr>
+                    <tr>
+                        <th>Gender</th>
+                        <td>Pria</td>
                     </tr>
                     <tr>
                         <th>Program</th>
@@ -29,13 +33,21 @@
                         <th>Enrollment Year</th>
                         <td>2022</td>
                     </tr>
+                    <tr>
+                        <th>Email</th>
+                        <td>henry.santoso@si.ukdw.ac.id</td>
+                    </tr>
+                    <tr>
+                        <th>Number Phone</th>
+                        <td>087612344321</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
     </div>
 
     <!-- Academic Information Section -->
-    <div class="card mb-4">
+    {{-- <div class="card mb-4">
         <div class="card-header bg-info text-white">
             <strong>Academic Information</strong>
         </div>
@@ -50,14 +62,10 @@
                         <th>Completed Credits</th>
                         <td>80 SKS</td>
                     </tr>
-                    <tr>
-                        <th>GPA</th>
-                        <td>3.75</td>
-                    </tr>
                 </tbody>
             </table>
         </div>
-    </div>
+    </div> --}}
 
     <!-- Important Announcements Section -->
     <div class="card">

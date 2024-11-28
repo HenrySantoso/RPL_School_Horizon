@@ -25,7 +25,7 @@
         .sidebar {
             margin-top: 40px;
             width: 250px;
-            background-color: #2c3e50;
+            background-color: #1566b7;
             color: #ecf0f1;
             display: flex;
             flex-direction: column;
@@ -151,10 +151,10 @@
     <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
         <nav class="nav flex-column">
-            <a href="/bank/home"
-                class="nav-link {{ Request::is('bank/home') ? 'active' : '' }}"
+            <a href="/bank/account"
+                class="nav-link {{ Request::is('bank/account') ? 'active' : '' }}"
                 id="homeLink">
-                <i class="bi bi-house-door-fill"></i> Home
+                <i class="bi bi-person-fill"></i> My Account
             </a>
             <a href="/bank/payment"
                 class="nav-link {{ Request::is('bank/payment') ? 'active' : '' }}"

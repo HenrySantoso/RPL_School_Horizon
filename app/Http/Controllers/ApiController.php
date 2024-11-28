@@ -30,7 +30,8 @@ class ApiController extends Controller
 
     public function getCategory()
     {
-        $response = Http::get(env('API_URL') . '/categories');
+        $response = Http::get(env('API_URL') . '/Categories');
+        // $response = Http::get('https://actualbackendapp.azurewebsites.net/api/v1/Categories');
 
         if ($response->successful()) {
             // Use the response directly as data

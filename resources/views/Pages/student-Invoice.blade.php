@@ -1,36 +1,48 @@
 @extends('layouts.student-layout')
-@section('title', 'Invoice & Pembayaran')
+@section('title', 'Invoice & Payment')
 
 @section('content')
 <div class="container mt-4">
     <!-- Header Section -->
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h4>INVOICE & PEMBAYARAN</h4>
-        <button class="btn btn-primary"><i class="bi bi-printer"></i> CETAK INVOICE</button>
-    </div>
-    <div class="mb-4">
-        <p><i class="bi bi-person-circle"></i> HENRY YOHANES SANTOSO / 72220543</p>
-        <p><i class="bi bi-credit-card"></i> <strong>Virtual Account:</strong> 123456789012345</p>
+        <h4>INVOICE</h4>
+        <a href="{{ route('generate-invoice') }}" class="btn btn-primary">
+            <i class="bi bi-printer"></i> INVOICE PDF
+        </a>
     </div>
 
-    <!-- Data Pembayaran Table -->
+    <!-- User Information Table -->
+    <div class="mb-4">
+        <table class="table table-bordered text-center">
+            <thead class="table-light">
+                <tr>
+                    <th><i class="bi bi-person-circle"></i> Name</th>
+                    <th><i class="bi bi-credit-card"></i> Virtual Account</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Henry Yohanes Santoso / 72220543</td>
+                    <td>123456789012345</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Payment Data Table -->
     <div class="card mb-4">
         <div class="card-header bg-info text-white">
-            <strong>DATA PEMBAYARAN SPP</strong>
+            <strong>PAYMENT DATA</strong>
         </div>
         <div class="card-body">
             <table id="dataPembayaranTable" class="table table-bordered text-center">
                 <thead class="table-light">
                     <tr>
                         <th>NO.</th>
-                        <th>TAHUN AKADEMIK</th>
+                        <th>ACADEMIC YEAR</th>
                         <th>SEMESTER</th>
-                        <th>SKS</th>
-                        <th>BIAYA SKS (Rp)</th>
-                        <th>TAGIHAN (Rp)</th>
-                        <th>DENDA (Rp)</th>
-                        <th>TOTAL TAGIHAN (Rp)</th>
-                        {{-- <th>TOTAL BAYAR (Rp)</th> --}}
+                        <th>TOTAL BILL (Rp)</th>
+                        <th>PAYMENT DATE</th>
                         <th>STATUS</th>
                     </tr>
                 </thead>
@@ -38,76 +50,38 @@
                     <tr>
                         <td>1</td>
                         <td>2024/2025</td>
-                        <td>GANJIL</td>
-                        <td>20</td>
-                        <td>200,000</td>
-                        <td>10,000,000</td>
-                        <td>200,000</td>
+                        <td>ODD</td>
                         <td>10,200,000</td>
-                        <td class="text-danger"><strong>BELUM LUNAS</strong></td>
+                        <td></td>
+                        <td class="text-danger"><strong>NOT PAID</strong></td>
                     </tr>
                     <tr>
                         <td>2</td>
                         <td>2023/2024</td>
-                        <td>GENAP</td>
-                        <td>18</td>
-                        <td>200,000</td>
+                        <td>EVEN</td>
                         <td>8,100,000</td>
-                        <td>0</td>
-                        <td>8,100,000</td>
-                        <td class="text-success"><strong>LUNAS</strong></td>
+                        <td>2024-05-01 17:42:14</td>
+                        <td class="text-success"><strong>PAID</strong></td>
                     </tr>
                     <tr>
                         <td>3</td>
                         <td>2023/2024</td>
-                        <td>GANJIL</td>
-                        <td>22</td>
-                        <td>200,000</td>
-                        <td>11,550,000</td>
-                        <td>300,000</td>
+                        <td>ODD</td>
                         <td>11,850,000</td>
-                        <td class="text-success"><strong>LUNAS</strong></td>
+                        <td>2023-11-20 19:42:14</td>
+                        <td class="text-success"><strong>PAID</strong></td>
                     </tr>
                     <tr>
                         <td>4</td>
                         <td>2022/2023</td>
-                        <td>GENAP</td>
-                        <td>19</td>
-                        <td>200,000</td>
-                        <td>9,025,000</td>
-                        <td>150,000</td>
+                        <td>EVEN</td>
                         <td>9,175,000</td>
-                        <td class="text-success"><strong>LUNAS</strong></td>
+                        <td>2023-05-11 12:42:14</td>
+                        <td class="text-success"><strong>PAID</strong></td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
 </div>
-
-
-{{-- <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Initialize DataTables
-        new DataTable('#dataPembayaranTable', {
-            responsive: true, // Optional: Make the table responsive
-            paging: true, // Enable pagination
-            ordering: true, // Enable column sorting
-            search: true, // Enable search functionality
-            language: {
-                search: "Cari:", // Customize the search input placeholder
-                lengthMenu: "Tampilkan _MENU_ data per halaman",
-                zeroRecords: "Data tidak ditemukan",
-                info: "Menampilkan _START_ hingga _END_ dari _TOTAL_ data",
-                infoEmpty: "Tidak ada data yang tersedia",
-                paginate: {
-                    first: "Pertama",
-                    last: "Terakhir",
-                    next: "Berikutnya",
-                    previous: "Sebelumnya"
-                }
-            }
-        });
-    });
-</script> --}}
 @endsection

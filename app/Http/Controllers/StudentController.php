@@ -15,4 +15,9 @@ class StudentController extends Controller
     {
         return view('pages.student-Invoice');
     }
+
+    public function transaction()
+    {
+        return view('pages.student-Transaction');
+    }
 }

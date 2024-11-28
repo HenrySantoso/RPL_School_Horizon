@@ -51,7 +51,7 @@
             transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .sidebar .nav-link.active{
+        .sidebar .nav-link.active {
             background-color: #1abc9c;
             color: #fff;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -154,15 +154,17 @@
     <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
         <nav class="nav flex-column">
-            <a href="/student/dashboard"
-               class="nav-link {{ Request::is('student/dashboard') ? 'active' : '' }}"
-               id="dashboardLink">
+            <a href="/student/dashboard" class="nav-link {{ Request::is('student/dashboard') ? 'active' : '' }}"
+                id="dashboardLink">
                 <i class="bi bi-people"></i> Dashboard
             </a>
-            <a href="/student/invoice"
-               class="nav-link {{ Request::is('student/invoice') ? 'active' : '' }}"
-               id="invoiceLink">
+            <a href="/student/invoice" class="nav-link {{ Request::is('student/invoice') ? 'active' : '' }}"
+                id="invoiceLink">
                 <i class="bi bi-receipt"></i> Invoice
+            </a>
+            <a href="/student/transaction" class="nav-link {{ Request::is('student/transaction') ? 'active' : '' }}"
+                id="transactionLink">
+                <i class="bi bi-file-text-fill"></i> Transaction List
             </a>
         </nav>
     </div>
@@ -178,14 +180,19 @@
             </div>
             <div class="user-dropdown">
                 <button class="btn btn-light dropdown-toggle" id="dropdownUserButton">
-                    <i class="bi bi-person-circle"></i> {{ Auth::user()->name ?? 'Guest' }}
+                    <i class="bi bi-person-circle"></i> {{ Auth::user()->username ?? 'Guest' }}
                 </button>
                 <div class="user-dropdown-menu" id="userDropdownMenu">
-                    <a href="#profile"><i class="bi bi-person-fill"></i> Profile</a>
-                    <a href="/logout"><i class="bi bi-box-arrow-right"></i> Logout</a>
+                    <!-- Logout form using POST method -->
+                    <form action="{{ route('logoutStudent') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="dropdown-item"><i class="bi bi-box-arrow-right"></i>
+                            Logout</button>
+                    </form>
                 </div>
             </div>
         </div>
+
 
         <!-- Content Area -->
         <div>

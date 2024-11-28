@@ -2,47 +2,69 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
+use App\Models\User;  // Make sure you are importing the correct User model
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
 
 class LoginController extends Controller
 {
-    public function showLoginFormBank()
+    // Show the login form for bank
+    public function showLoginBankForm()
     {
-        return view('pages.loginBankApp'); // Returns the login view
+        return view('auth.loginBankApp'); // Returns the login view
     }
 
-    public function showLoginFormStudent()
+    // Show the login form for student
+    public function showLoginStudentForm()
     {
-        return view('pages.loginStudentApp'); // Returns the login view
+        return view('auth.loginStudentApp'); // Returns the login view
     }
 
-    public function login(Request $request)
+    // Handle student login
+    public function loginStudent(Request $request)
     {
-        // Validate login input
+        // Validate input
         $request->validate([
-            'email' => 'required|email',
+            'username' => 'required|string',
             'password' => 'required|string',
         ]);
 
-        // Attempt to log the user in
-        if (Auth::attempt($request->only('email', 'password'))) {
-            $request->session()->regenerate();
-            return redirect()->intended('/dashboard'); // Redirect to dashboard after login
+        $credentials = $request->only('username', 'password');
+
+        // Fetch user by username
+        $user = User::where('username', $credentials['username'])->first();
+
+        // Check if the user exists and the password matches
+        if ($user && Hash::check($credentials['password'], $user->password)) {
+            // Check if the role is student
+            if ($user->role === 'student') {
+                Auth::login($user); // Log in the student
+                return redirect('/student/dashboard'); // Redirect to student dashboard
+            } else {
+                // If the role is not 'student'
+                return redirect()->back()->withErrors(['role' => 'Unauthorized role. You must be a student to access this page.']);
+            }
         }
 
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ]);
+        // If credentials are incorrect
+        return redirect()->back()->withErrors(['loginStudent' => 'Invalid credentials. Please check your username and password.']);
     }
 
-    public function logout(Request $request)
+    // Method to logout student
+    public function logoutStudent(Request $request)
     {
+        // Log out the current user
         Auth::logout();
+
+        // Invalidate session
         $request->session()->invalidate();
+
+        // Regenerate CSRF token
         $request->session()->regenerateToken();
 
-        return redirect('/login'); // Redirect to login after logout
+        // Redirect to login page
+        return redirect()->route('loginStudent'); // Redirect back to login page
     }
 }
