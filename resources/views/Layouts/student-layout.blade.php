@@ -154,9 +154,9 @@
     <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
         <nav class="nav flex-column">
-            <a href="/student/dashboard" class="nav-link {{ Request::is('student/dashboard') ? 'active' : '' }}"
-                id="dashboardLink">
-                <i class="bi bi-people"></i> Dashboard
+            <a href="/student/profile" class="nav-link {{ Request::is('student/profile') ? 'active' : '' }}"
+                id="profileLink">
+                <i class="bi bi-people"></i> Profile
             </a>
             <a href="/student/invoice" class="nav-link {{ Request::is('student/invoice') ? 'active' : '' }}"
                 id="invoiceLink">

@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 
 class StudentController extends Controller
 {
-    public function dashboard()
+    public function profile()
     {
-        return view('pages.student-Dashboard');
+        return view('pages.student-Profile');
     }
 
     public function invoice()

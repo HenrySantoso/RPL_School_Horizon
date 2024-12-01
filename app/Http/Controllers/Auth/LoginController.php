@@ -41,7 +41,7 @@ class LoginController extends Controller
             // Check if the role is student
             if ($user->role === 'student') {
                 Auth::login($user); // Log in the student
-                return redirect('/student/dashboard'); // Redirect to student dashboard
+                return redirect('/student/profile'); // Redirect to student dashboard
             } else {
                 // If the role is not 'student'
                 return redirect()->back()->withErrors(['role' => 'Unauthorized role. You must be a student to access this page.']);

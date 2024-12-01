@@ -3,32 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Categories</title>
+    <title>Students</title>
 </head>
 <body>
-    <h1>Categories</h1>
+    <h1>Students</h1>
 
-    @if (!empty($categories))
+    @if (!empty($students))
         <table border="1">
             <thead>
                 <tr>
-                    <th>Category ID</th>
+                    <th>Student ID</th>
                     <th>Name</th>
-                    <th>Description</th>
+                    <th>Gender</th>
+                    <th>Year</th>
+                    <th>Major</th>
+                    <th>Email</th>
+                    <th>Phone</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($categories as $category)
+                @foreach ($students as $student)
                     <tr>
-                        <td>{{ $category['categoryId'] }}</td>
-                        <td>{{ $category['name'] }}</td>
-                        <td>{{ $category['description'] }}</td>
+                        <td>{{ $student['student_id'] }}</td>
+                        <td>{{ $student['name'] }}</td>
+                        <td>{{ $student['gender'] }}</td>
+                        <td>{{ $student['year'] }}</td>
+                        <td>{{ $student['major'] }}</td>
+                        <td>{{ $student['email'] }}</td>
+                        <td>{{ $student['phone'] }}</td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
     @else
-        <p>No categories available.</p>
+        <p>No students available.</p>
     @endif
 </body>
 </html>

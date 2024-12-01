@@ -20,7 +20,7 @@ Route::post('/logoutStudent', [LoginController::class, 'logoutStudent'])->name('
 
 //student app
 Route::middleware(['auth', 'role:student'])->group(function () {
-    Route::get('/student/dashboard', [StudentController::class, 'dashboard']);
+    Route::get('/student/profile', [ApiController::class, 'profile']);
     Route::get('/student/invoice', [StudentController::class, 'invoice']);
     Route::get('/student/transaction', [StudentController::class, 'transaction']);
 });
@@ -36,8 +36,8 @@ Route::get('/bank/payment', [BankController::class, 'payment']);
 Route::post('/bank/payment/process', [BankController::class, 'process'])->name('payment.process');
 
 //api
-Route::get('/', [ApiController::class, 'getApiData']);
-Route::get('/test', [ApiController::class, 'getCategory']);
+Route::get('/', [ApiController::class, 'getAllStudents']);
+Route::get('/test', [ApiController::class, 'getAllStudents']);
 
 //invoice
 Route::get('/generate-invoice', [InvoiceController::class, 'generateInvoice'])->name('generate-invoice');;
