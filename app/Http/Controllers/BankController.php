@@ -16,6 +16,11 @@ class BankController extends Controller
         return view('pages.bank-Payment'); // Returns the login view
     }
 
+    public function virtual()
+    {
+        return view('pages.bank-Virtual'); // Returns the login view
+    }
+
     public function process(Request $request)
     {
         // Validate payment input

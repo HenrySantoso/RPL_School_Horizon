@@ -72,7 +72,7 @@
             @endif
 
             <!-- Login Form -->
-            <form action="{{ route('login') }}" method="POST">
+            <form action="{{ route('loginBank') }}" method="POST">
                 @csrf
                 <div class="mb-3">
                     <label for="username" class="form-label">Username</label>

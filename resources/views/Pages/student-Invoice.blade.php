@@ -4,84 +4,105 @@
 @section('content')
 <div class="container mt-4">
     <!-- Header Section -->
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h4>INVOICE</h4>
-        <a href="{{ route('generate-invoice') }}" class="btn btn-primary">
-            <i class="bi bi-printer"></i> INVOICE PDF
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h4 class="text-primary"><i class="bi bi-receipt"></i> Invoice & Payment</h4>
+        <a href="{{ route('generate-invoice') }}" class="btn btn-outline-primary">
+            <i class="bi bi-printer"></i> Download Invoice PDF
         </a>
     </div>
 
-    <!-- User Information Table -->
+    <!-- User Information Section -->
     <div class="mb-4">
-        <table class="table table-bordered text-center">
-            <thead class="table-light">
-                <tr>
-                    <th><i class="bi bi-person-circle"></i> Name</th>
-                    <th><i class="bi bi-credit-card"></i> Virtual Account</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Henry Yohanes Santoso / 72220543</td>
-                    <td>123456789012345</td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="card">
+            <div class="card-header bg-warning">
+                <strong><i class="bi bi-person-circle"></i> Student Virtual Account</strong>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered text-center">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Student Name</th>
+                            <th>Virtual Account</th>
+                            <th>Semester</th>
+                            <th>Academic Year</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Henry Yohanes Santoso / 72220543</td>
+                            <td>
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <span id="virtualAccount">123456789012345</span>
+                                    <button class="btn btn-outline-secondary btn-sm ms-2" onclick="copyToClipboard('virtualAccount')">
+                                        <i class="bi bi-clipboard"></i> Copy
+                                    </button>
+                                </div>
+                            </td>
+                            <td>ODD</td> <!-- Replace with dynamic semester data -->
+                            <td>2024/2025</td> <!-- Replace with dynamic academic year data -->
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 
-    <!-- Payment Data Table -->
+    <!-- Invoice Detail Section -->
     <div class="card mb-4">
         <div class="card-header bg-info text-white">
-            <strong>PAYMENT DATA</strong>
+            <strong><i class="bi bi-credit-card"></i> Invoice Details</strong>
         </div>
         <div class="card-body">
-            <table id="dataPembayaranTable" class="table table-bordered text-center">
+            <table id="dataPembayaranTable" class="table table-bordered">
                 <thead class="table-light">
                     <tr>
-                        <th>NO.</th>
-                        <th>ACADEMIC YEAR</th>
-                        <th>SEMESTER</th>
-                        <th>TOTAL BILL (Rp)</th>
-                        <th>PAYMENT DATE</th>
-                        <th>STATUS</th>
+                        <th class="text-start text-center">Bill Type</th>
+                        <th class="text-end text-center">Price (IDR)</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>1</td>
-                        <td>2024/2025</td>
-                        <td>ODD</td>
-                        <td>10,200,000</td>
-                        <td></td>
-                        <td class="text-danger"><strong>NOT PAID</strong></td>
+                        <td class="text-start">Fix Cost</td>
+                        <td class="text-end">3,000,000</td>
                     </tr>
                     <tr>
-                        <td>2</td>
-                        <td>2023/2024</td>
-                        <td>EVEN</td>
-                        <td>8,100,000</td>
-                        <td>2024-05-01 17:42:14</td>
-                        <td class="text-success"><strong>PAID</strong></td>
+                        <td class="text-start">Variable Cost (24 x 200,000)</td>
+                        <td class="text-end">4,800,000</td>
                     </tr>
                     <tr>
-                        <td>3</td>
-                        <td>2023/2024</td>
-                        <td>ODD</td>
-                        <td>11,850,000</td>
-                        <td>2023-11-20 19:42:14</td>
-                        <td class="text-success"><strong>PAID</strong></td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>2022/2023</td>
-                        <td>EVEN</td>
-                        <td>9,175,000</td>
-                        <td>2023-05-11 12:42:14</td>
-                        <td class="text-success"><strong>PAID</strong></td>
+                        <td class="text-start">Late Charge</td>
+                        <td class="text-end">200,000</td>
                     </tr>
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <th class="text-start">Total</th>
+                        <th class="text-end"><strong>8,000,000</strong></th>
+                    </tr>
+                </tfoot>
             </table>
         </div>
     </div>
+
+    <!-- Pay Now Section -->
+    <div class="text-center">
+        <a href="/loginBank" class="btn btn-success btn-lg">
+            <i class="bi bi-wallet2"></i> Pay Now
+        </a>
+    </div>
 </div>
+
+<!-- JavaScript for Copy to Clipboard -->
+<script>
+    function copyToClipboard(elementId) {
+        const element = document.getElementById(elementId);
+        const textToCopy = element.innerText || element.textContent;
+        navigator.clipboard.writeText(textToCopy).then(() => {
+            alert('Virtual Account copied to clipboard!');
+        }).catch((error) => {
+            console.error('Failed to copy: ', error);
+            alert('Failed to copy Virtual Account.');
+        });
+    }
+</script>
 @endsection

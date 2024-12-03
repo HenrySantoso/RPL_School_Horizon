@@ -18,6 +18,11 @@ Route::get('/loginStudent', [LoginController::class, 'showLoginStudentForm'])->n
 Route::post('/loginStudent', [LoginController::class, 'loginStudent']);
 Route::post('/logoutStudent', [LoginController::class, 'logoutStudent'])->name('logoutStudent');
 
+//login bank app
+Route::get('/loginBank', [LoginController::class, 'showLoginBankForm'])->name('loginBank');
+Route::post('/loginBank', [LoginController::class, 'loginBank']);
+Route::post('/logoutBank', [LoginController::class, 'logoutBank'])->name('logoutBank');
+
 //student app
 Route::middleware(['auth', 'role:student'])->group(function () {
     Route::get('/student/profile', [ApiController::class, 'profile']);
@@ -25,14 +30,10 @@ Route::middleware(['auth', 'role:student'])->group(function () {
     Route::get('/student/transaction', [StudentController::class, 'transaction']);
 });
 
-//login bank app
-Route::get('/loginBank', [LoginController::class, 'showLoginFormBank'])->name('loginBank');
-Route::post('/loginBank', [LoginController::class, 'login']);
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-
 //banking app
 Route::get('/bank/account', [BankController::class, 'account']);
 Route::get('/bank/payment', [BankController::class, 'payment']);
+Route::get('/bank/payment/virtual', [BankController::class, 'virtual']);
 Route::post('/bank/payment/process', [BankController::class, 'process'])->name('payment.process');
 
 //api

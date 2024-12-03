@@ -67,4 +67,49 @@ class LoginController extends Controller
         // Redirect to login page
         return redirect()->route('loginStudent'); // Redirect back to login page
     }
+
+    public function loginBank(Request $request)
+    {
+        // Validate input
+        $request->validate([
+            'username' => 'required|string',
+            'password' => 'required|string',
+        ]);
+
+        $credentials = $request->only('username', 'password');
+
+        // Fetch user by username
+        $user = User::where('username', $credentials['username'])->first();
+
+        // Check if the user exists and the password matches
+        if ($user && Hash::check($credentials['password'], $user->password)) {
+            // Check if the role is student
+            if ($user->role === 'student') {
+                Auth::login($user); // Log in the student
+                return redirect('/bank/account'); // Redirect to student dashboard
+            } else {
+                // If the role is not 'student'
+                return redirect()->back()->withErrors(['role' => 'Unauthorized role. You must be a student to access this page.']);
+            }
+        }
+
+        // If credentials are incorrect
+        return redirect()->back()->withErrors(['loginBank' => 'Invalid credentials. Please check your username and password.']);
+    }
+
+    // Method to logout student
+    public function logoutBank(Request $request)
+    {
+        // Log out the current user
+        Auth::logout();
+
+        // Invalidate session
+        $request->session()->invalidate();
+
+        // Regenerate CSRF token
+        $request->session()->regenerateToken();
+
+        // Redirect to login page
+        return redirect()->route('loginBank'); // Redirect back to login page
+    }
 }
