@@ -34,6 +34,7 @@ Route::middleware(['auth', 'role:student'])->group(function () {
 Route::get('/bank/account', [BankController::class, 'account']);
 Route::get('/bank/payment', [BankController::class, 'payment']);
 Route::get('/bank/payment/virtual', [BankController::class, 'virtual']);
+Route::get('/bank/payment/virtual/succeed', [BankController::class, 'succeedPayment']);
 Route::post('/bank/payment/process', [BankController::class, 'process'])->name('payment.process');
 
 //api

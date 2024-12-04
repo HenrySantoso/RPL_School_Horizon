@@ -246,7 +246,8 @@
         document.getElementById('payButton').onclick = function() {
             // Perform payment logic (e.g., form submission or API call)
             alert('Payment processed successfully!');
-            document.getElementById('invoiceModal').style.display = 'none'; // Close modal after payment
+            // document.getElementById('invoiceModal').style.display = 'none'; // Close modal after payment
+            window.location.href = '/bank/payment/virtual/succeed';
         }
     </script>
 </body>
