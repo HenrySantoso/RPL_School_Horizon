@@ -28,6 +28,7 @@ Route::middleware(['auth', 'role:student'])->group(function () {
     Route::get('/student/profile', [ApiController::class, 'profile']);
     Route::get('/student/invoice', [StudentController::class, 'invoice']);
     Route::get('/student/transaction', [StudentController::class, 'transaction']);
+    Route::put('/student/update', [StudentController::class, 'update'])->name('student.update');
 });
 
 //banking app

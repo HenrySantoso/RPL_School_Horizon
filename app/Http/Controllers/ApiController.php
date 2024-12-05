@@ -13,7 +13,7 @@ class ApiController extends Controller
     public function __construct()
     {
         // Define the base URL for the API (Ngrok URL)
-        $this->apiUrl = 'https://1545-202-152-159-219.ngrok-free.app/';
+        $this->apiUrl = 'https://47a9-202-152-159-219.ngrok-free.app/';
     }
 
     public function profile()

@@ -201,7 +201,7 @@
                 <p><strong>Total Bill:</strong> Rp 1,500,000</p>
                 <p><strong>Semester:</strong> Spring 2024</p>
                 <p><strong>Due Date:</strong> 31st December 2024</p>
-                <p><strong>Invoice Reference:</strong> INV-123456789</p>
+                <p><strong>Invoice Reference:</strong> INV-123456789012345</p>
                 <p><strong>Payment Instructions:</strong> Please complete the payment before the due date.</p>
                 <div class="mb-3">
                     <label for="paymentPassword" class="form-label">Enter Payment Password</label>
@@ -221,7 +221,7 @@
             let virtualAccountNumber = document.getElementById('virtualAccountNumber').value;
 
             // Simple check for valid virtual account number (example: 10001)
-            if (virtualAccountNumber === '10001') {
+            if (virtualAccountNumber === '123456789012345') {
                 // Show the modal with the invoice details
                 document.getElementById('invoiceModal').style.display = 'block';
             } else {
