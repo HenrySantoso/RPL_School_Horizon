@@ -65,6 +65,23 @@
             font-size: 12px;
             color: #555;
         }
+
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .back-button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
@@ -103,6 +120,8 @@
         <div class="footer">
             <p>Biaya Layanan: Rp 0</p>
         </div>
+
+        <a href="/bank/account" class="back-button">Back to Account</a>
     </div>
 </body>
 </html>

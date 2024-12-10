@@ -25,22 +25,22 @@ Route::post('/logoutBank', [LoginController::class, 'logoutBank'])->name('logout
 
 //student app
 Route::middleware(['auth', 'role:student'])->group(function () {
-    Route::get('/student/profile', [ApiController::class, 'profile']);
+    Route::get('/student/profile', [StudentController::class, 'profile']);
     Route::get('/student/invoice', [StudentController::class, 'invoice']);
     Route::get('/student/transaction', [StudentController::class, 'transaction']);
     Route::put('/student/update', [StudentController::class, 'update'])->name('student.update');
 });
 
 //banking app
-Route::get('/bank/account', [BankController::class, 'account']);
-Route::get('/bank/payment', [BankController::class, 'payment']);
-Route::get('/bank/payment/virtual', [BankController::class, 'virtual']);
-Route::get('/bank/payment/virtual/succeed', [BankController::class, 'succeedPayment']);
-Route::post('/bank/payment/process', [BankController::class, 'process'])->name('payment.process');
+Route::middleware(['auth', 'role:student'])->group(function () {
+    Route::get('/bank/account', [BankController::class, 'account']);
+    Route::get('/bank/payment', [BankController::class, 'payment']);
+    Route::get('/bank/payment/virtual', [BankController::class, 'virtual']);
+    Route::get('/bank/payment/virtual/succeed', [BankController::class, 'succeedPayment']);
+    Route::post('/bank/payment/process', [BankController::class, 'process'])->name('payment.process');
+});
 
 //api
 Route::get('/', [ApiController::class, 'getAllStudents']);
-Route::get('/test', [ApiController::class, 'getAllStudents']);
-
 //invoice
 Route::get('/generate-invoice', [InvoiceController::class, 'generateInvoice'])->name('generate-invoice');;

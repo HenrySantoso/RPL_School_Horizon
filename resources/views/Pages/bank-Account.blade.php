@@ -3,7 +3,7 @@
 
 @section('content')
 <div class="container mt-4">
-    <h4 class="mb-4">Hello, Henry!</h4>
+    <h4 class="mb-4">Hello, {{ $student['name'] }}!</h4>
 
     <!-- User Information Section -->
     <div class="row g-4">
@@ -14,7 +14,7 @@
                     <strong>No Rekening</strong>
                 </div>
                 <div class="card-body">
-                    <p class="fs-4 mb-0">72220543</p>
+                    <p class="fs-4 mb-0">{{ $student['student_id'] }}</p>
                 </div>
             </div>
         </div>
@@ -26,7 +26,7 @@
                     <strong>Name</strong>
                 </div>
                 <div class="card-body">
-                    <p class="fs-4 mb-0">Henry Yohanes Santoso</p>
+                    <p class="fs-4 mb-0">{{ $student['name'] }}</p>
                 </div>
             </div>
         </div>
@@ -35,10 +35,10 @@
         <div class="col-md-4">
             <div class="card text-center shadow-sm">
                 <div class="card-header bg-warning text-dark">
-                    <strong>Saldo</strong>
+                    <strong>Balance</strong>
                 </div>
                 <div class="card-body">
-                    <p class="fs-4 mb-0">Rp 10.000.000</p>
+                    <p class="fs-4 mb-0">{{ $student['balance'] }}</p>
                 </div>
             </div>
         </div>
@@ -90,23 +90,6 @@
                 <p class="fs-4 mb-0">Invoice #INV-123456789 - Rp 1.500.000</p>
                 <p class="mb-0">Due Date: 2024-12-15</p>
                 <a href="#" class="btn btn-primary mt-2">Pay Now</a>
-            </div>
-        </div>
-    </div>
-
-    <!-- Bank Services Section -->
-    <div class="col-md-6 mt-4">
-        <div class="card shadow-sm">
-            <div class="card-header bg-success text-white">
-                <strong>Bank Services</strong>
-            </div>
-            <div class="card-body">
-                <ul>
-                    <li><a href="#">Apply for a Loan</a></li>
-                    <li><a href="#">Create a Virtual Account</a></li>
-                    <li><a href="#">Foreign Exchange Rates</a></li>
-                    <li><a href="#">Credit Card Application</a></li>
-                </ul>
             </div>
         </div>
     </div>

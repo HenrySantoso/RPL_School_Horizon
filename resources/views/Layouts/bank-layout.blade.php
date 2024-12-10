@@ -170,16 +170,20 @@
         <div class="header">
             <button class="btn btn-light d-md-none" id="toggleSidebar"><i class="bi bi-list"></i></button>
             <div class="header-title">
-                <img src="{{ asset('images/bca-logo-white.png') }}" alt="Bank Logo">
-                Bank BCA
+                <img src="{{ asset('images/bca-logo-white.png') }}" alt="BCA">
+                <span>Bank BCA</span>
             </div>
             <div class="user-dropdown">
                 <button class="btn btn-light dropdown-toggle" id="dropdownUserButton">
-                    <i class="bi bi-person-circle"></i> User
+                    <i class="bi bi-person-circle"></i> {{ Auth::user()->username ?? 'Guest' }}
                 </button>
                 <div class="user-dropdown-menu" id="userDropdownMenu">
-                    <a href="#profile"><i class="bi bi-person-fill"></i> Profile</a>
-                    <a href="#logout"><i class="bi bi-box-arrow-right"></i> Logout</a>
+                    <!-- Logout form using POST method -->
+                    <form action="{{ route('logoutBank') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="dropdown-item"><i class="bi bi-box-arrow-right"></i>
+                            Logout</button>
+                    </form>
                 </div>
             </div>
         </div>

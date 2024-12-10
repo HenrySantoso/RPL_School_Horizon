@@ -167,11 +167,11 @@
             <!-- Display Account Info -->
             <div class="mb-3">
                 <label class="form-label">Rekening Number</label>
-                <input type="text" class="form-control" value="123-456-789" disabled>
+                <input type="text" class="form-control" value={{ $student['student_id'] }} disabled>
             </div>
             <div class="mb-3">
                 <label class="form-label">Saldo</label>
-                <input type="text" class="form-control" value="Rp 5,000,000" disabled>
+                <input type="text" class="form-control" value={{ $student['balance'] }} disabled>
             </div>
 
             <!-- Virtual Account Number Input -->
@@ -221,7 +221,7 @@
             let virtualAccountNumber = document.getElementById('virtualAccountNumber').value;
 
             // Simple check for valid virtual account number (example: 10001)
-            if (virtualAccountNumber === '123456789012345') {
+            if (virtualAccountNumber === {{ $virtual_account['virtual_account_number'] }}) {
                 // Show the modal with the invoice details
                 document.getElementById('invoiceModal').style.display = 'block';
             } else {
@@ -252,3 +252,4 @@
     </script>
 </body>
 </html>
+
