@@ -81,7 +81,7 @@
     </div>
 
     <!-- Outstanding Payments Section -->
-    <div class="col-md-6 mt-4">
+    {{-- <div class="col-md-6 mt-4">
         <div class="card shadow-sm">
             <div class="card-header bg-danger text-white">
                 <strong>Outstanding Payments</strong>
@@ -92,7 +92,7 @@
                 <a href="#" class="btn btn-primary mt-2">Pay Now</a>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <!-- Quick Actions Section -->
     <div class="col-md-12 mt-4">

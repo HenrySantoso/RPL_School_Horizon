@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,10 +18,10 @@
         .container {
             max-width: 800px;
             margin: 50px auto;
-            padding: 20px;
+            padding: 30px;
             background-color: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
         }
 
         h2 {
@@ -38,10 +39,10 @@
 
         .form-control {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             margin: 10px 0;
             border: 1px solid #ccc;
-            border-radius: 5px;
+            border-radius: 8px;
             font-size: 14px;
             transition: border-color 0.3s ease;
         }
@@ -84,7 +85,7 @@
         }
 
         .mb-3 {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         /* Modal Styles */
@@ -97,24 +98,23 @@
             width: 100%;
             height: 100%;
             overflow: auto;
-            background-color: rgb(0,0,0);
-            background-color: rgba(0,0,0,0.4);
+            background-color: rgba(0, 0, 0, 0.6);
             padding-top: 60px;
         }
 
         .modal-content {
             background-color: #fff;
             margin: 5% auto;
-            padding: 20px;
+            padding: 30px;
             border: 1px solid #888;
             width: 80%;
-            max-width: 500px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
         }
 
         .modal-header {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: bold;
             color: #007bff;
             margin-bottom: 20px;
@@ -122,7 +122,7 @@
 
         .modal-body p {
             font-size: 16px;
-            margin: 8px 0;
+            margin: 12px 0;
         }
 
         .modal-footer {
@@ -133,13 +133,13 @@
         .close {
             color: #aaa;
             float: right;
-            font-size: 28px;
+            font-size: 30px;
             font-weight: bold;
         }
 
         .close:hover,
         .close:focus {
-            color: black;
+            color: #000;
             text-decoration: none;
             cursor: pointer;
         }
@@ -153,9 +153,15 @@
             h2 {
                 font-size: 22px;
             }
+
+            .modal-content {
+                width: 90%;
+                padding: 20px;
+            }
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h2>Virtual Account Payment</h2>
@@ -167,18 +173,18 @@
             <!-- Display Account Info -->
             <div class="mb-3">
                 <label class="form-label">Rekening Number</label>
-                <input type="text" class="form-control" value={{ $student['student_id'] }} disabled>
+                <input type="text" class="form-control" value="{{ $student['student_id'] }}" disabled>
             </div>
             <div class="mb-3">
                 <label class="form-label">Saldo</label>
-                <input type="text" class="form-control" value={{ $student['balance'] }} disabled>
+                <input type="text" class="form-control" value="{{ $student['balance'] }}" disabled>
             </div>
 
             <!-- Virtual Account Number Input -->
             <div class="mb-3">
                 <label for="virtualAccountNumber" class="form-label">Enter Virtual Account Number</label>
-                <input type="text" class="form-control" id="virtualAccountNumber" name="virtualAccountNumber" required
-                    placeholder="Enter your virtual account number">
+                <input type="text" class="form-control" id="virtualAccountNumber" name="virtualAccountNumber"
+                    required placeholder="Enter your virtual account number">
             </div>
 
             <!-- Submit Button -->
@@ -197,11 +203,13 @@
                 <h3>Invoice Details</h3>
             </div>
             <div class="modal-body">
-                <p><strong>Name:</strong> John Doe</p>
-                <p><strong>Total Bill:</strong> Rp 1,500,000</p>
-                <p><strong>Semester:</strong> Spring 2024</p>
-                <p><strong>Due Date:</strong> 31st December 2024</p>
-                <p><strong>Invoice Reference:</strong> INV-123456789012345</p>
+                <p><strong>Name :</strong> {{ $virtual_account['invoice']['student']['name'] }}</p>
+                <p><strong>Total Bill:</strong> Rp {{ number_format($virtual_account['invoice']['total_amount'], 0, ',', '.') }}</p>
+                <p><strong>Semester:</strong> {{ $virtual_account['invoice']['payment_period']['semester'] }}
+                    {{ $virtual_account['invoice']['payment_period']['year'] }}/{{ $virtual_account['invoice']['payment_period']['year'] + 1 }}
+                </p>
+                <p><strong>Due Date:</strong> {{ \Carbon\Carbon::parse($virtual_account['expired_at'])->format('d F Y H:i:s') }}</p>
+                <p><strong>Invoice Reference:</strong> {{ $virtual_account['virtual_account_number'] }}</p>
                 <p><strong>Payment Instructions:</strong> Please complete the payment before the due date.</p>
                 <div class="mb-3">
                     <label for="paymentPassword" class="form-label">Enter Payment Password</label>
@@ -220,8 +228,11 @@
         document.getElementById('submitButton').onclick = function() {
             let virtualAccountNumber = document.getElementById('virtualAccountNumber').value;
 
-            // Simple check for valid virtual account number (example: 10001)
-            if (virtualAccountNumber === {{ $virtual_account['virtual_account_number'] }}) {
+            // Ensure the Blade variable is properly quoted as a JavaScript string
+            let validVirtualAccountNumber = "{{ $virtual_account['virtual_account_number'] }}";
+
+            // Simple check for valid virtual account number
+            if (virtualAccountNumber === validVirtualAccountNumber) {
                 // Show the modal with the invoice details
                 document.getElementById('invoiceModal').style.display = 'block';
             } else {
@@ -251,5 +262,5 @@
         }
     </script>
 </body>
-</html>
 
+</html>
