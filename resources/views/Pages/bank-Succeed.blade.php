@@ -87,40 +87,31 @@
 <body>
     <div class="container">
         <div class="header">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Bank_BNI_logo.svg/1200px-Bank_BNI_logo.svg.png" alt="BNI Logo">
-            <h3>Pembayaran Berhasil</h3>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Bank_BNI_logo.svg/1200px-Bank_BNI_logo.svg.png" alt="BCA Logo">
+            <h3 align="center">Payment Successful</h3>
         </div>
 
         <div class="amount">
-            Rp 1.430.000
+            Rp 2.300.000
         </div>
 
         <div class="details">
-            <p><span class="label">Sumber Dana:</span> Tabungan/Giro 1490453033</p>
-            <p><span class="label">Jenis Layanan:</span> PEMBAYARAN</p>
-            <p><span class="label">Perguruan Tinggi:</span> Universitas Kristen Duta Wacana</p>
-            <p><span class="label">Referensi Transaksi:</span> 230914000013771494</p>
-            <p><span class="label">Tanggal Transaksi:</span> 14-09-2023</p>
-            <p><span class="label">Waktu Transaksi:</span> 13:44:23 WIB</p>
-            <p><span class="label">Nomor Billing:</span> 72220543</p>
-            <p><span class="label">Nama:</span> HENRY YOHANES SANTOSO</p>
-            <p><span class="label">Program Studi:</span> SISTEM INFORMASI</p>
-            <p><span class="label">Strata:</span> S1</p>
-            <p><span class="label">Fakultas:</span> TEKNOLOGI INFORMASI</p>
-            <p><span class="label">Jurusan:</span> SISTEM INFORMASI</p>
-            <p><span class="label">Periode:</span> GASAL 2023/2024</p>
-            <p><span class="label">Rincian:</span></p>
+            <p><span class="label">Account Number       :</span> 72220001</p>
+            <p><span class="label">Payment Type         :</span> Virtual Account</p>
+            <p><span class="label">Institution          :</span> Hudson Group</p>
+            <p><span class="label">Transaction Date     :</span> 11-12-2024</p>
+            <p><span class="label">Transaction Time     :</span> 13:44:23 </p>
+            <p><span class="label">Virtual Account      :</span> 123123123</p>
+            <p><span class="label">Nama                 :</span> Henry Yohanes</p>
+            <p><span class="label">Major                :</span> Information System</p>
+            <p><span class="label">Period               :</span> GANJIL 2023/2024</p>
+            <p><span class="label">Details :</span></p>
             <ul style="margin: 0; padding-left: 20px;">
-                <li>TETAP: Rp 1.100.000</li>
-                <li>KESEHATAN: Rp 165.000</li>
-                <li>INTEGRASI: Rp 165.000</li>
+                <li>Fixed Cost  : Rp 3.500.000</li>
+                <li>Credit Cost : Rp 300.000</li>
+                <li>ICE Rp 240</li>
             </ul>
         </div>
-
-        <div class="footer">
-            <p>Biaya Layanan: Rp 0</p>
-        </div>
-
         <a href="/bank/account" class="back-button">Back to Account</a>
     </div>
 </body>

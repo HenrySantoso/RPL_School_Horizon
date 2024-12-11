@@ -27,26 +27,26 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>2</td>
-                        <td>2023/2024</td>
-                        <td>EVEN</td>
-                        <td>8,100,000</td>
+                        <td>1</td>
+                        <td>2022/2023</td>
+                        <td>GANJIL</td>
+                        <td>8.100.000</td>
                         <td>2024-05-01 17:42:14</td>
+                        <td><span class="badge bg-success"><strong>PAID</strong></span></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>2022/2023</td>
+                        <td>GENAP</td>
+                        <td>11.850.000</td>
+                        <td>2023-11-20 19:42:14</td>
                         <td><span class="badge bg-success"><strong>PAID</strong></span></td>
                     </tr>
                     <tr>
                         <td>3</td>
                         <td>2023/2024</td>
-                        <td>ODD</td>
-                        <td>11,850,000</td>
-                        <td>2023-11-20 19:42:14</td>
-                        <td><span class="badge bg-success"><strong>PAID</strong></span></td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>2022/2023</td>
-                        <td>EVEN</td>
-                        <td>9,175,000</td>
+                        <td>GANJIL</td>
+                        <td>2.300.000</td>
                         <td>2023-05-11 12:42:14</td>
                         <td><span class="badge bg-success"><strong>PAID</strong></span></td>
                     </tr>

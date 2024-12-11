@@ -8,124 +8,97 @@
         body {
             font-family: Arial, sans-serif;
             margin: 0;
-            padding: 0;
-        }
-        .container {
-            width: 80%;
-            margin: 20px auto;
             padding: 20px;
-            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+        .section {
+            margin-bottom: 20px;
+            padding: 15px;
             border-radius: 8px;
             background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
+        .section-header {
+            font-weight: bold;
+            padding: 10px;
+            color: #fff;
+            border-radius: 8px 8px 0 0;
         }
-        .header img {
-            max-width: 100px;
-            margin-bottom: 10px;
+        .header-yellow {
+            background-color: #f8c200;
         }
-        .header h1 {
-            margin: 0;
+        .header-blue {
+            background-color: #17a2b8;
         }
-        .details, .courses, .costs {
-            margin-bottom: 20px;
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
         }
-        .courses th, .courses td {
+        table th, table td {
+            text-align: left;
             padding: 8px;
             border: 1px solid #ddd;
         }
-        .courses th {
-            text-align: left;
+        table th {
             background-color: #f4f4f4;
         }
-        .costs table {
-            width: 100%;
-            margin-top: 10px;
-        }
-        .costs th, .costs td {
-            padding: 8px;
+        .text-right {
             text-align: right;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <img src="{{ asset('images/horizon-logo.png') }}" alt="University Logo">
-            <h1>HORIZON UNIVERSITY</h1>
-            <p>Invoice Registrasi Gasal 2024/2025</p>
-        </div>
+    <div class="section">
+        <div class="section-header header-yellow">Student Virtual Account</div>
+        <table>
+            <tr>
+                <th>Student Name</th>
+                <td>Henry Yohanes</td>
+            </tr>
+            <tr>
+                <th>Virtual Account</th>
+                <td>123123123</td>
+            </tr>
+            <tr>
+                <th>Semester</th>
+                <td>GANJIL</td>
+            </tr>
+            <tr>
+                <th>Academic Year</th>
+                <td>2023/2024</td>
+            </tr>
+        </table>
+    </div>
 
-        <div class="details">
-            <p><strong>Prodi:</strong> Sistem Informasi</p>
-            <p><strong>Nama:</strong> {{ $name }}</p>
-            <p><strong>NRP:</strong> 72220543</p>
-        </div>
-
-        <div class="courses">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Kode</th>
-                        <th>Mata Kuliah</th>
-                        <th>Grup</th>
-                        <th>Sks</th>
-                        <th>Harga</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($courses as $course)
-                    <tr>
-                        <td>{{ $course['code'] }}</td>
-                        <td>{{ $course['name'] }}</td>
-                        <td>{{ $course['group'] }}</td>
-                        <td>{{ $course['credits'] }}</td>
-                        <td>{{ $course['price'] }}</td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-
-        <div class="costs">
-            <table>
+    <div class="section">
+        <div class="section-header header-blue">Invoice Details</div>
+        <table>
+            <thead>
                 <tr>
-                    <th>Total Sks</th>
-                    <td>{{ $total }}</td>
+                    <th>Bill Type</th>
+                    <th class="text-right">Price (IDR)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Fixed Cost</td>
+                    <td class="text-right">3,500,000</td>
                 </tr>
                 <tr>
-                    <th>Total Harga</th>
-                    <td>{{ $variable_cost }}</td>
+                    <td>Credit Cost</td>
+                    <td class="text-right">300,000</td>
                 </tr>
                 <tr>
-                    <th>Biaya Tetap</th>
-                    <td>{{ $fixed_cost }}</td>
-                </tr>
-                <tr>
-                    <th>Biaya Kesehatan</th>
-                    <td>{{ $health }}</td>
+                    <td>Biaya ICE</td>
+                    <td class="text-right">240</td>
                 </tr>
                 <tr>
                     <th>Total</th>
-                    <td>{{ $total }}</td>
+                    <th class="text-right">2,300,000</th>
                 </tr>
-                <tr>
-                    <th>Subsidi MBKM/MSIB</th>
-                    <td>{{ $subsidi }}</td>
-                </tr>
-                <tr>
-                    <th>Total Tagihan</th>
-                    <td>{{ $total_due }}</td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="footer">
-            <p>Yogyakarta, {{ now()->format('d/m/Y') }}</p>
-            <p>Biro Administrasi Akademik</p>
-        </div>
+            </tbody>
+        </table>
     </div>
 </body>
 </html>
