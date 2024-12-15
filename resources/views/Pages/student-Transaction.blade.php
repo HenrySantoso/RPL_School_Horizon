@@ -29,11 +29,9 @@
                         @forelse ($transactions as $index => $transaction)
                             <tr>
                                 <td>{{ $index + 1 }}</td>
-                                <td>{{ data_get($transaction, 'virtual_account.invoice.payment_period.year') }}/{{ data_get($transaction, 'virtual_account.invoice.payment_period.year') + 1 }}
-                                </td>
+                                <td>{{ data_get($transaction, 'virtual_account.invoice.payment_period.year') }}/{{ data_get($transaction, 'virtual_account.invoice.payment_period.year') + 1 }}</td>
                                 <td>{{ data_get($transaction, 'virtual_account.invoice.payment_period.semester') }}</td>
-                                <td>{{ number_format(data_get($transaction, 'virtual_account.invoice.total_amount'), 0, ',', '.') }}
-                                </td>
+                                <td>{{ number_format(data_get($transaction, 'virtual_account.invoice.total_amount'), 0, ',', '.') }}</td>
                                 <td>{{ data_get($transaction, 'transaction_date') }}</td>
                                 <td>
                                     @if (data_get($transaction, 'virtual_account.status') === 'Paid')
@@ -49,7 +47,6 @@
                             </tr>
                         @endforelse
                     </tbody>
-
                 </table>
             </div>
         </div>

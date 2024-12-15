@@ -115,7 +115,7 @@
                 <input type="text" class="form-control" value="{{ $student['student_id'] }}" disabled>
             </div>
             <div class="mb-3">
-                <label class="form-label">Balance</label>
+                <label class="form-label">Balance (IDR)</label>
                 <input type="text" class="form-control" value="{{ number_format($student['balance'], 0, ',', '.') }}" disabled>
             </div>
 
