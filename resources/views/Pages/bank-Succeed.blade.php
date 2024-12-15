@@ -87,7 +87,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Bank_BNI_logo.svg/1200px-Bank_BNI_logo.svg.png" alt="BCA Logo">
+            <img src="{{ asset('images/bca-logo-white.png') }}" alt="BCA Logo">
             <h3 align="center">Payment Successful</h3>
         </div>
 

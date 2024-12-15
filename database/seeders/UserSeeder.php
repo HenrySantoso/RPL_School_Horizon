@@ -16,7 +16,7 @@ class UserSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            'username' => '93751896',
+            'username' => '06732028',
             'password' => Hash::make('student'), // Replace 'your_password_here' with the desired password
             'role' => 'student', // Default role
             'created_at' => now(),

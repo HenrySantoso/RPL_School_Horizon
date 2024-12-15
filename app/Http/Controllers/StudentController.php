@@ -12,7 +12,9 @@ class StudentController extends Controller
 
     public function __construct()
     {
-        $this->apiUrl = env('API_BASE_URL', 'https://stud-upright-skunk.ngrok-free.app/');
+        //$this->apiUrl = env('API_BASE_URL', 'https://stud-upright-skunk.ngrok-free.app/');
+        //$this->apiUrl = env('API_BASE_URL', 'https://easily-pleasant-mustang.ngrok-free.app/');
+        $this->apiUrl = env('API_BASE_URL', 'http://127.0.0.1:3000/');
     }
 
     /**
@@ -81,6 +83,28 @@ class StudentController extends Controller
         }
     }
 
+        /**
+     * Fetch all invoices from the API.
+     *
+     * @return array|null Returns an array of invoices or null if the request fails.
+     */
+    private function getAllTransactions()
+    {
+        try {
+            $response = Http::get($this->apiUrl . 'api/transactions');
+
+            if ($response->successful()) {
+                return $response->json(); // Return all invoices as an array
+            } else {
+                \Log::error('Failed to fetch transactions: ' . $response->body());
+                return null; // Return null if the request fails
+            }
+        } catch (\Exception $e) {
+            \Log::error('Error fetching transactions: ' . $e->getMessage());
+            return null; // Return null in case of an exception
+        }
+    }
+
     public function profile()
     {
         $username = Auth::user()->username; // Get the logged-in user's username
@@ -136,7 +160,7 @@ class StudentController extends Controller
             $virtual_account = collect($virtual_accounts)->firstWhere('invoice.student.student_id', $username);
 
             if ($virtual_account) {
-                // Log the selected virtual account 
+                // Log the selected virtual account
                 \Log::info('Selected Virtual Account for student: ' . $username, ['virtual_account' => $virtual_account]);
             } else {
                 // Log a warning if no virtual account is found
@@ -154,8 +178,29 @@ class StudentController extends Controller
 
     public function transaction()
     {
-        return view('pages.student-Transaction');
+        // Get the logged-in user's student ID
+        $loggedInStudentId = Auth::user()->username;
+
+        // Fetch all transactions (assuming `getAllTransactions` returns the full JSON)
+        $response = $this->getAllTransactions();
+        $transactions = collect($response['data']); // Convert 'data' to a collection for easier handling
+
+        // Filter transactions based on the logged-in user's student ID
+        $filteredTransactions = $transactions->filter(function ($transaction) use ($loggedInStudentId) {
+            return data_get($transaction, 'virtual_account.invoice.student.student_id') == $loggedInStudentId;
+        });
+
+        if ($filteredTransactions->isNotEmpty()) {
+            \Log::info('Filtered Transactions:', ['transactions' => $filteredTransactions->toArray()]);
+        } else {
+            \Log::warning('No transactions found for student ID: ' . $loggedInStudentId);
+        }
+
+        // Return the view with the filtered transactions
+        return view('pages.student-Transaction', ['transactions' => $filteredTransactions]);
     }
+
+
 
     public function update(Request $request)
     {

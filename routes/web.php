@@ -9,13 +9,13 @@ use App\Http\Controllers\InvoiceController;
 
 //guest login
 Route::middleware(['guest:student'])->group(function () {
-    Route::get('/loginStudent', [AuthController::class, 'showLogin'])->name('loginStudent');
-    Route::post('/loginStudent', [AuthController::class, 'loginStudent']);
+    Route::get('/', [AuthController::class, 'showLogin'])->name('loginStudent');
+    Route::post('/', [AuthController::class, 'loginStudent']);
 });
 
 //login student app
-Route::get('/loginStudent', [LoginController::class, 'showLoginStudentForm'])->name('loginStudent');
-Route::post('/loginStudent', [LoginController::class, 'loginStudent']);
+Route::get('/', [LoginController::class, 'showLoginStudentForm'])->name('loginStudent');
+Route::post('/', [LoginController::class, 'loginStudent']);
 Route::post('/logoutStudent', [LoginController::class, 'logoutStudent'])->name('logoutStudent');
 
 //login bank app
@@ -36,11 +36,15 @@ Route::middleware(['auth', 'role:student'])->group(function () {
     Route::get('/bank/account', [BankController::class, 'account']);
     Route::get('/bank/payment', [BankController::class, 'payment']);
     Route::get('/bank/payment/virtual', [BankController::class, 'virtual']);
-    Route::get('/bank/payment/virtual/succeed', [BankController::class, 'succeedPayment']);
+    Route::get('/bank/payment/virtualDetails', [BankController::class, 'virtualDetails']);
     Route::post('/bank/payment/process', [BankController::class, 'process'])->name('payment.process');
+   // Route::post('/bank/payment/verify', [BankController::class, 'verifyPassword'])->name('payment.verify');
+    Route::post('/payment/complete', [BankController::class, 'completePayment']);
+    Route::get('/payment/succeed', [BankController::class, 'succeedPayment']);
+    Route::post('/bank/payment/transaction', [BankController::class, 'processTransaction']);
 });
 
 //api
-Route::get('/', [ApiController::class, 'getAllStudents']);
+//Route::get('/', [ApiController::class, 'getAllStudents']);
 //invoice
 Route::get('/generate-invoice', [InvoiceController::class, 'generateInvoice'])->name('generate-invoice');;

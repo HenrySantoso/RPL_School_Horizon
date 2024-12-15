@@ -7,24 +7,34 @@ use Illuminate\Http\Request;
 
 class InvoiceController extends Controller
 {
+    private $apiUrl;
+
+    public function __construct()
+    {
+        //$this->apiUrl = env('API_BASE_URL', 'https://stud-upright-skunk.ngrok-free.app/');
+        //$this->apiUrl = env('API_BASE_URL', 'https://easily-pleasant-mustang.ngrok-free.app//');
+        $this->apiUrl = env('API_BASE_URL', 'http://127.0.0.1:3000/');
+    }
+
+    private function getAllInvoices()
+    {
+        try {
+            $response = Http::get($this->apiUrl . 'api/invoices');
+
+            if ($response->successful()) {
+                return $response->json(); // Return all invoices as an array
+            } else {
+                \Log::error('Failed to fetch invoices: ' . $response->body());
+                return null; // Return null if the request fails
+            }
+        } catch (\Exception $e) {
+            \Log::error('Error fetching invoices: ' . $e->getMessage());
+            return null; // Return null in case of an exception
+        }
+    }
+
     public function generateInvoice()
     {
-        // Sample data for the invoice (replace with actual data)
-        $data = [
-            'name' => 'Henry Yohanes Santoso',
-            'courses' => [
-                ['code' => 'SE4323', 'name' => 'DATA MINING', 'group' => 'A', 'credits' => 3, 'price' => 3.0],
-                ['code' => 'SI2413', 'name' => 'REKAYASA PERANGKAT LUNAK', 'group' => 'B', 'credits' => 3, 'price' => 2.0],
-                ['code' => 'PR2413', 'name' => 'PRAKTIKUM REKAYASA PERANGKAT LUNAK', 'group' => 'A', 'credits' => 3, 'price' => 3.0],
-                // Add all your courses here...
-            ],
-            'fixed_cost' => 2600000,
-            'variable_cost' => 5400000,
-            'health' => 165000,
-            'total' => 8330000,
-            'subsidi' => 600000,
-            'total_due' => 2330000
-        ];
 
         // Generate the PDF from the view
         $pdf = PDF::loadView('invoice', $data);

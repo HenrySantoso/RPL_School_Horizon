@@ -159,7 +159,7 @@
             <a href="/bank/payment"
                 class="nav-link {{ Request::is('bank/payment') ? 'active' : '' }}"
                 id="paymentLink">
-                <i class="bi bi-credit-card-fill"></i> Payment
+                <i class="bi bi-arrow-left-right"></i> Transfer
             </a>
         </nav>
     </div>
