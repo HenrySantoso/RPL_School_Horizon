@@ -11,7 +11,7 @@
         <div class="col-md-4">
             <div class="card text-center shadow-sm">
                 <div class="card-header bg-primary text-white">
-                    <strong>No Rekening</strong>
+                    <strong>Account Number</strong>
                 </div>
                 <div class="card-body">
                     <p class="fs-4 mb-0">{{ $student['student_id'] }}</p>
@@ -35,10 +35,10 @@
         <div class="col-md-4">
             <div class="card text-center shadow-sm">
                 <div class="card-header bg-warning text-dark">
-                    <strong>Balance</strong>
+                    <strong>Balance (IDR)</strong>
                 </div>
                 <div class="card-body">
-                    <p class="fs-4 mb-0">{{ $student['balance'] }}</p>
+                    <p class="fs-4 mb-0">{{ number_format($student['balance'], 0, ',', '.') }}</p>
                 </div>
             </div>
         </div>

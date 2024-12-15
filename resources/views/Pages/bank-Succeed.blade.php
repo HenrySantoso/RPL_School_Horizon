@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -84,35 +85,47 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="header">
-            <img src="{{ asset('images/bca-logo-white.png') }}" alt="BCA Logo">
+            {{-- <img src="{{ asset('images/bca-logo-white.png') }}" alt="BCA Logo" align="center"> --}}
             <h3 align="center">Payment Successful</h3>
         </div>
 
         <div class="amount">
-            Rp 2.300.000
+            Rp {{ number_format($transaction['total'], 0, ',', '.') }}
         </div>
 
         <div class="details">
-            <p><span class="label">Account Number       :</span> 72220001</p>
-            <p><span class="label">Payment Type         :</span> Virtual Account</p>
-            <p><span class="label">Institution          :</span> Hudson Group</p>
-            <p><span class="label">Transaction Date     :</span> 11-12-2024</p>
-            <p><span class="label">Transaction Time     :</span> 13:44:23 </p>
-            <p><span class="label">Virtual Account      :</span> 123123123</p>
-            <p><span class="label">Nama                 :</span> Henry Yohanes</p>
-            <p><span class="label">Major                :</span> Information System</p>
-            <p><span class="label">Period               :</span> GANJIL 2023/2024</p>
-            <p><span class="label">Details :</span></p>
+            <p><strong class="label">Account Number </strong>: {{ $transaction['virtual_account']['invoice']['student']['student_id'] }}</p>
+            <p><strong class="label">Payment Type </strong>: Virtual Account</p>
+            <p><strong class="label">Institution </strong>: {{ $transaction['virtual_account']['invoice']['payment_period']['institution']['name'] }}</p>
+            <p><strong class="label">Transaction Date </strong>: {{ $transaction['transaction_date'] }}</p>
+            <p><strong class="label">Transaction Time </strong>: {{ \Carbon\Carbon::parse($transaction['created_at'])->format('H:i:s') }}</p>
+            <p><strong class="label">Virtual Account </strong>: {{ $transaction['virtual_account']['virtual_account_number'] }}</p>
+            <p><strong class="label">Name </strong>: {{ $transaction['virtual_account']['invoice']['student']['name'] }}</p>
+            <p><strong class="label">Major </strong>: {{ $transaction['virtual_account']['invoice']['student']['major'] }}</p>
+            <p><strong class="label">Period </strong>:
+                {{ $transaction['virtual_account']['invoice']['payment_period']['semester'] }}
+                {{ $transaction['virtual_account']['invoice']['payment_period']['year'] }} /
+                {{ $transaction['virtual_account']['invoice']['payment_period']['year'] + 1 }}
+            </p>
+            <p><strong class="label">Details :</strong></p>
             <ul style="margin: 0; padding-left: 20px;">
-                <li>Fixed Cost  : Rp 3.500.000</li>
-                <li>Credit Cost : Rp 300.000</li>
-                <li>ICE Rp 240</li>
+                <li>Fixed Cost :
+                    {{ number_format($transaction['virtual_account']['invoice']['payment_period']['fixed_cost'], 0, ',', '.') }}
+                </li>
+                <li>Credit Cost :
+                    {{ number_format($transaction['virtual_account']['invoice']['payment_period']['credit_cost'], 0, ',', '.') }}
+                </li>
+                @foreach ($transaction['virtual_account']['invoice']['invoice_items'] as $item)
+                    <li>{{ $item['description'] }} : {{ number_format($item['price'], 0, ',', '.') }}</li>
+                @endforeach
             </ul>
         </div>
         <a href="/bank/account" class="back-button">Back to Account</a>
     </div>
 </body>
+
 </html>

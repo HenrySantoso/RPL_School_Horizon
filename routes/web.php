@@ -29,6 +29,7 @@ Route::middleware(['auth', 'role:student'])->group(function () {
     Route::get('/student/invoice', [StudentController::class, 'invoice']);
     Route::get('/student/transaction', [StudentController::class, 'transaction']);
     Route::put('/student/update', [StudentController::class, 'update'])->name('student.update');
+    Route::get('/generate-invoice', [StudentController::class, 'generateInvoice'])->name('generate-invoice');
 });
 
 //banking app
@@ -47,4 +48,4 @@ Route::middleware(['auth', 'role:student'])->group(function () {
 //api
 //Route::get('/', [ApiController::class, 'getAllStudents']);
 //invoice
-Route::get('/generate-invoice', [InvoiceController::class, 'generateInvoice'])->name('generate-invoice');;
+

@@ -113,29 +113,41 @@ class BankController extends Controller
     {
         $username = Auth::user()->username;
 
+        // Get all virtual accounts and students
+        $virtualAccounts = $this->getAllVirtualAccounts();
+        $students = $this->getAllStudents();
+
+        // Get the active virtual account
+        $virtual_account_student_active = $this->getActiveVirtualAccount($virtualAccounts);
+        $student = $students ? collect($students)->firstWhere('student_id', $virtual_account_student_active['invoice']['student']['student_id']) : null;
+
+        // Validate payment password first
         $request->validate([
             'paymentPassword' => 'required',
         ]);
 
-        $students = collect($this->getAllStudents());
-        $student = $students->firstWhere('student_id', $username);
-        $virtual_account     = $this->getAllVirtualAccounts();
-        $virtual_account = $virtual_accounts ? collect($virtual_accounts)->firstWhere('invoice.student.student_id', $username) : null;
-
-        if (!$student || !$virtual_account || !Hash::check($request->input('paymentPassword'), $student['password'])) {
-            return redirect()->back()->with('error', 'Invalid data. Please try again.');
+        // Check if the payment password is correct
+        if (!$student || !Hash::check($request->input('paymentPassword'), $student['password'])) {
+            return redirect()->back()->with('error', 'Invalid password. Please try again.');
         }
 
-        $virtualAccountNumber = $virtual_account['virtual_account_number'] ?? null;
-        $totalAmount = $virtual_account['total'] ?? null;
+        // Check if the virtual account exists
+        if (!$virtual_account_student_active) {
+            return redirect()->back()->with('error', 'No active virtual account found. Please try again.');
+        }
 
-        if (!$virtualAccountNumber || !$totalAmount) {
+        $virtualAccountNumber = $virtual_account_student_active['virtual_account_number'] ?? null;
+        $totalAmount = $virtual_account_student_active['total_amount'] ?? null;
+        $date = now()->toDateString();
+
+        // Check if the required data is available
+        if (!$virtualAccountNumber || !$totalAmount || !$date) {
             return redirect()->back()->with('error', 'Invalid virtual account or total amount data.');
         }
 
         $postData = [
             'virtual_account_number' => $virtualAccountNumber,
-            'transaction_date' => now()->toDateString(),
+            'transaction_date' => $date,
             'total' => $totalAmount,
         ];
 
@@ -151,7 +163,9 @@ class BankController extends Controller
 
     public function succeedPayment()
     {
-        return view('pages.bank-Succeed');
+        $transactions = $this->getAllTransactions();
+        $transaction = $transactions ? collect($transactions['data'])->last() : null;
+        return view('pages.bank-Succeed', compact('transaction'));
     }
 
     public function process(Request $request)

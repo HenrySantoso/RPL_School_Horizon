@@ -111,12 +111,12 @@
 
             <!-- Display Account Info -->
             <div class="mb-3">
-                <label class="form-label">Rekening Number</label>
+                <label class="form-label">Account Number</label>
                 <input type="text" class="form-control" value="{{ $student['student_id'] }}" disabled>
             </div>
             <div class="mb-3">
-                <label class="form-label">Saldo</label>
-                <input type="text" class="form-control" value="{{ $student['balance'] }}" disabled>
+                <label class="form-label">Balance</label>
+                <input type="text" class="form-control" value="{{ number_format($student['balance'], 0, ',', '.') }}" disabled>
             </div>
 
             <!-- Virtual Account Number Input -->

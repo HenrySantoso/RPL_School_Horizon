@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
@@ -153,6 +154,33 @@ class StudentController extends Controller
         // Return the view with the filtered transactions
         return view('pages.student-Transaction', ['transactions' => $filteredTransactions]);
     }
+
+    public function generateInvoice()
+    {
+        // Example JSON data (you can fetch this from your database or API)
+        $virtualAccounts = $this->getAllVirtualAccounts(); // Assuming this retrieves the JSON data
+        $invoices = $this->getAllInvoices();
+        $students = $this->getAllStudents();
+
+        // Get the active virtual account
+        $virtual_account_student_active = $this->getActiveVirtualAccount($virtualAccounts);
+        $invoice = collect($invoices)->firstWhere('id', $virtual_account_student_active['invoice_id']);
+        $student = collect($students)->firstWhere('student_id', $virtual_account_student_active['invoice']['student']['student_id']);
+
+        // Combine all data into a single array for the Blade view
+        $data = [
+            'virtual_account_student_active' => $virtual_account_student_active,
+            'invoice' => $invoice,
+            'student' => $student,
+        ];
+
+        // Generate the PDF from the view
+        $pdf = PDF::loadView('invoice', $data);
+
+        // Download the PDF as invoice_<student_id>.pdf
+        return $pdf->download('invoice_' . $student['student_id'] . '.pdf');
+    }
+
 
     public function update(Request $request)
     {
