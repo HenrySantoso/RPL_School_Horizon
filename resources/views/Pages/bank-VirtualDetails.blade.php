@@ -145,15 +145,15 @@
 
 
         <div class="details">
-            <p><strong>Name:</strong> {{ $virtual_account['invoice']['student']['name'] }}</p>
+            <p><strong>Name:</strong> {{ $virtual_account_student_active['invoice']['student']['name'] }}</p>
             <p><strong>Total Bill:</strong> Rp
-                {{ number_format($virtual_account['invoice']['total_amount'], 0, ',', '.') }}</p>
-            <p><strong>Semester:</strong> {{ $virtual_account['invoice']['payment_period']['semester'] }}
-                {{ $virtual_account['invoice']['payment_period']['year'] }}/{{ $virtual_account['invoice']['payment_period']['year'] + 1 }}
+                {{ number_format($virtual_account_student_active['invoice']['total_amount'], 0, ',', '.') }}</p>
+            <p><strong>Semester:</strong> {{ $virtual_account_student_active['invoice']['payment_period']['semester'] }}
+                {{ $virtual_account_student_active['invoice']['payment_period']['year'] }}/{{ $virtual_account_student_active['invoice']['payment_period']['year'] + 1 }}
             </p>
             <p><strong>Due Date:</strong>
-                {{ \Carbon\Carbon::parse($virtual_account['expired_at'])->format('d F Y H:i:s') }}</p>
-            <p><strong>Invoice Reference:</strong> {{ $virtual_account['virtual_account_number'] }}</p>
+                {{ \Carbon\Carbon::parse($virtual_account_student_active['expired_at'])->format('d F Y H:i:s') }}</p>
+            <p><strong>Virtual Account Number:</strong> {{ $virtual_account_student_active['virtual_account_number'] }}</p>
             <p><strong>Payment Instructions:</strong> Please complete the payment before the due date.</p>
         </div>
 

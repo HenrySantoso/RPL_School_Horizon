@@ -18,7 +18,7 @@
                     <strong><i class="bi bi-person-circle"></i> Student Virtual Account</strong>
                 </div>
                 <div class="card-body">
-                    @if ($invoice)
+                    @if ($virtual_account_student_active)
                         <table class="table table-bordered text-center">
                             <thead class="table-light">
                                 <tr>
@@ -30,22 +30,21 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>{{ $invoice['student']['name'] }}</td>
+                                    <td>{{ $virtual_account_student_active['invoice']['student']['name'] }}</td>
                                     <td>
                                         <div class="d-flex justify-content-center align-items-center">
-                                            @if ($virtual_account)
-                                                <span id="virtualAccount">{{ $virtual_account['virtual_account_number'] }}</span>
-                                                <button class="btn btn-outline-secondary btn-sm ms-2"
-                                                    onclick="copyToClipboard('virtualAccount')">
-                                                    <i class="bi bi-clipboard"></i> Copy
-                                                </button>
-                                            @else
-                                                <span class="text-danger">No Virtual Account Found</span>
-                                            @endif
+                                            <span
+                                                id="virtualAccount">{{ $virtual_account_student_active['virtual_account_number'] }}</span>
+                                            <button class="btn btn-outline-secondary btn-sm ms-2"
+                                                onclick="copyToClipboard('virtualAccount')">
+                                                <i class="bi bi-clipboard"></i> Copy
+                                            </button>
+
                                         </div>
                                     </td>
-                                    <td>{{ $invoice['payment_period']['semester'] }}</td>
-                                    <td>{{ $invoice['payment_period']['year'] }}/{{ $invoice['payment_period']['year'] + 1 }}</td>
+                                    <td>{{ $virtual_account_student_active['invoice']['payment_period']['semester'] }}</td>
+                                    <td>{{ $virtual_account_student_active['invoice']['payment_period']['year'] }}/{{ $virtual_account_student_active['invoice']['payment_period']['year'] + 1 }}
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -57,7 +56,7 @@
         </div>
 
         <!-- Invoice Detail Section -->
-        @if ($invoice)
+        @if ($virtual_account_student_active)
             <div class="card mb-4">
                 <div class="card-header bg-info text-white">
                     <strong><i class="bi bi-credit-card"></i> Invoice Details</strong>
@@ -74,15 +73,17 @@
                             <!-- Display fixed cost and credit cost -->
                             <tr>
                                 <td>Fixed Cost</td>
-                                <td class="text-end">{{ number_format($invoice['payment_period']['fixed_cost'], 0, ',', '.') }}</td>
+                                <td class="text-end">
+                                    {{ number_format($invoice['payment_period']['fixed_cost'], 0, ',', '.') }}</td>
                             </tr>
                             <tr>
-                                <td>Credit Cost</td>
-                                <td class="text-end">{{ number_format($invoice['payment_period']['credit_cost'], 0, ',', '.') }}</td>
+                                <td>Administration Cost</td>
+                                <td class="text-end">
+                                    {{ number_format($invoice['payment_period']['credit_cost'], 0, ',', '.') }}</td>
                             </tr>
                             <!-- Display invoice items -->
-                            @if (!empty($invoice['invoice_items']))
-                                @foreach ($invoice['invoice_items'] as $item)
+                            @if (!empty($virtual_account_student_active['invoice']['invoice_items']))
+                                @foreach ($virtual_account_student_active['invoice']['invoice_items'] as $item)
                                     <tr>
                                         <td class="text-start">{{ $item['description'] }}</td>
                                         <td class="text-end">{{ number_format($item['price'], 0, ',', '.') }}</td>
@@ -98,7 +99,7 @@
                             <tr>
                                 <th class="text-start">Total</th>
                                 <th class="text-end">
-                                    <strong>{{ number_format($invoice['total_amount'], 0, ',', '.') }}</strong>
+                                    <strong>{{ number_format($virtual_account_student_active['invoice']['total_amount'], 0, ',', '.') }}</strong>
                                 </th>
                             </tr>
                         </tfoot>

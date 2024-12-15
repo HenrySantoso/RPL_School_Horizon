@@ -140,7 +140,7 @@
             let virtualAccountNumber = document.getElementById('virtualAccountNumber').value;
 
             // Ensure the Blade variable is properly quoted as a JavaScript string
-            let validVirtualAccountNumber = "{{ $virtual_account['virtual_account_number'] }}";
+            let validVirtualAccountNumber = "{{ $virtual_account_student_active['virtual_account_number'] }}";
 
             // Simple check for valid virtual account number
             if (virtualAccountNumber === validVirtualAccountNumber) {

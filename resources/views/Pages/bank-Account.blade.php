@@ -103,7 +103,7 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between">
                     <a href="#" class="btn btn-info">Transfer Funds</a>
-                    <a href="#" class="btn btn-warning">Generate Virtual Account</a>
+                    <a href="#" class="btn btn-warning">Top Up</a>
                     <a href="#" class="btn btn-success">View Invoice</a>
                     <a href="#" class="btn btn-danger">Make Payment</a>
                 </div>
