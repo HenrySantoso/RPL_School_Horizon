@@ -108,6 +108,9 @@
             </div>
         @endif
 
+        <div class="text-left mb-4">
+            <p class="text-muted">Please complete the payment before <strong>{{ \Carbon\Carbon::parse($virtual_account_student_active['expired_at'])->format('d F Y, h:i A') }}</strong></p>
+        </div>
         <!-- Pay Now Section -->
         <div class="text-center">
             <a href="/loginBank" class="btn btn-success btn-lg">

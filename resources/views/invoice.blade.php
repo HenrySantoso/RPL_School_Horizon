@@ -69,16 +69,33 @@
 </head>
 
 <body>
-    @if ($virtual_account_student_active)
-        <div class="section">
-            <div class="section-header header-yellow">HORIZON UNIVERSITY</div>
-            <div class="section-header">INVOICE
-                {{ $invoice['payment_period']['semester'] }}
-                {{ $invoice['payment_period']['year'] }}/{{ $invoice['payment_period']['year'] + 1 }}
+    <h3 align="center">NEW INVOICE</h3>
+    @if ($virtual_account_student_active && $invoice && $student)
+        <div
+            style="margin-bottom: 20px; padding: 15px; background-color: #fff; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); border-radius: 8px;">
+            <div
+                style="font-weight: bold; padding: 10px; background-color: #f8c200; color: #fff; border-radius: 8px 8px 0 0;">
+                HORIZON UNIVERSITY
             </div>
-            <div class="section-header">MAJOR {{ $student['major'] }}</div>
-            <div class="section-header">{{ $virtual_account_student_active['invoice']['student']['name'] }}</div>
+            <div style="font-weight: bold; padding: 10px;">
+                <span style="font-weight: normal;">Payment Semester:
+                    {{ $invoice['payment_period']['semester'] }}</span>
+                <br>
+                <br>
+                <span style="font-weight: normal;">Payment Year:
+                    {{ $invoice['payment_period']['year'] }}/{{ $invoice['payment_period']['year'] + 1 }}</span>
+            </div>
+            <div style="font-weight: bold; padding: 10px;">
+                <span style="font-weight: normal;">Student's Major: {{ $student['major'] }}</span>
+
+            </div>
+            <div style="font-weight: bold; padding: 10px;">
+                <span style="font-weight: normal;">Student's Name:
+                    {{ $virtual_account_student_active['invoice']['student']['name'] }}</span>
+
+            </div>
         </div>
+
 
         <div class="section">
             <div class="section-header header-blue">BILL</div>
@@ -114,6 +131,9 @@
             </table>
         </div>
         {{-- You can add additional sections like payment instructions here --}}
+        <div style="padding: 10px;">
+            <p class="text-muted">Please complete the payment before <strong>{{ \Carbon\Carbon::parse($virtual_account_student_active['expired_at'])->format('d F Y, h:i A') }}</strong></p>
+        </div>
     @else
         <div class="section">
             <p>Invoice not found.</p>
